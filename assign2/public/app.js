@@ -4,6 +4,7 @@ import Mover from "./mover.js";
 export default class App {
   constructor() {
     //TODO
+    this.mover = new Mover();
     document.getElementById("addButton").addEventListener("click", (event)=>{
       event.preventDefault();
       let cardTitle = document.getElementById("cardTitle");
@@ -23,7 +24,7 @@ export default class App {
   addCard(col, title, color) {
     //TODO
     let card = new Card(title, color);
-    card.addToCol(col, null);
+    card.addToCol(col, this.mover);
     return card;
   }
 

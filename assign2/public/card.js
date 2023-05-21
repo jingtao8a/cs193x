@@ -3,49 +3,58 @@ const NO_DESCRIPTION_TEXT = "(No description)";
 
 export default class Card {
   constructor(title, color) {
+    let templateCard = document.querySelector(".template");
     this.title = title;
     this.color = color;
-    this.description = NO_DESCRIPTION_TEXT;
+    this.card = templateCard.cloneNode(true);
+    this.description = this.card.querySelector(".description");
+    this.editDescription = this.card.querySelector(".editDescription");
+    this.editButton = this.card.querySelector(".buttons .edit");
+    this.deleteButton = this.card.querySelector(".buttons .delete");
+    this.startMoveButton = this.card.querySelector(".buttons .startMove");
+
+    this.card.classList.remove("template");
+    this.card.style.background = this.color;
+    this.card.querySelector(".title").textContent = this.title;
+    this.description.textContent = NO_DESCRIPTION_TEXT;
   }
 
   addToCol(colElem, mover) {
+    mover.stopMoving();
     let toDoSection = document.getElementById(colElem);
-    let templateCard = document.querySelector(".template");
-    let thisCard = templateCard.cloneNode(true);
-    thisCard.classList.remove("template");
-    thisCard.style.background = this.color;
-    thisCard.querySelector(".title").textContent = this.title;
-    let description = thisCard.querySelector(".description");
-    let editDescription = thisCard.querySelector(".editDescription");
-    description.textContent = this.description;
-    toDoSection.append(thisCard);
+    toDoSection.append(this.card);
 
-    editDescription.addEventListener("blur", (event)=>{
-      this.setDescription(editDescription.value);
-      description.textContent = this.description;
-      description.classList.remove("hidden");
-      editDescription.classList.add("hidden");
+    this.editDescription.addEventListener("blur", (event)=>{
+      event.preventDefault();
+      this.setDescription(event.currentTarget.value);
+      this.description.classList.remove("hidden");
+      this.editDescription.classList.add("hidden");
     });
 
-    thisCard.querySelector(".buttons .edit").addEventListener("click", (event)=>{
+    this.editButton.addEventListener("click", (event)=>{
       event.preventDefault();
-      description.classList.add("hidden");
-      editDescription.classList.remove("hidden");
+      this.description.classList.add("hidden");
+      this.editDescription.classList.remove("hidden");
     });
     
-    thisCard.querySelector(".buttons .delete").addEventListener("click", (event)=>{
+    this.deleteButton.addEventListener("click", (event)=>{
       event.preventDefault();
-      thisCard.remove();
+      mover.stopMoving();
+      this.card.remove();
+    });
+
+    this.startMoveButton.addEventListener("click", (event)=>{
+      event.preventDefault();
+      mover.stopMoving();
+      this.card.classList.add("moving");
+      mover.startMoving(this.card);
     });
   }
 
   setDescription(text) {
-    //TODO
     if (!text || text.length == 0) {
       return;
     }
-    this.description = text;
+    this.description.textContent = text;
   }
-
-  //TODO
 }
