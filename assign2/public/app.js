@@ -3,7 +3,6 @@ import Mover from "./mover.js";
 
 export default class App {
   constructor() {
-    //TODO
     this.mover = new Mover();
     document.getElementById("addButton").addEventListener("click", (event)=>{
       event.preventDefault();
@@ -15,18 +14,15 @@ export default class App {
         alert("you should give the cardTitle");
         return;
       }
-      this.addCard("todo", title, color);
+      this.addCard("todo", title, color);//DOM对象引用了this(app)
       cardTitle.value = null;
       cardColor.value = null;
     });
   }
 
   addCard(col, title, color) {
-    //TODO
     let card = new Card(title, color);
     card.addToCol(col, this.mover);
     return card;
   }
-
-  //TODO
 }
