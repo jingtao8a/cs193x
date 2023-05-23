@@ -13,7 +13,7 @@ export default class FollowList {
     /* This is shorthand syntax, equivalent to { onAdd: onAdd, onRemove: onRemove } */
     this._callbacks = { onAdd, onRemove };
     /* Defines this._list and this._form. */
-    this._createElements();
+    this._createElements();//创建一个list和一个form
     parent.append(this._list, this._form);
   }
 
