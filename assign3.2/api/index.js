@@ -62,7 +62,7 @@ api.get("/users/*/feed", async (req, res)=>{
   let postArray = await posts.find({userId: userId}).toArray();
   for (let i of postArray) {
     data.posts.push({
-      users: {
+      user: {
         id: user[0].id,
         name: user[0].name,
         avatarURL: user[0].avatarURL
@@ -76,7 +76,7 @@ api.get("/users/*/feed", async (req, res)=>{
     let followPostArray = await posts.find({userId:followId}).toArray();
     for (let i of followPostArray) {
       data.posts.push({
-        users:{
+        user:{
           id: followUser[0].id,
           name: followUser[0].name,
           avatarURL: followUser[0].avatarURL
@@ -151,7 +151,7 @@ api.patch("/users/*", async (req, res)=>{
   let newName = req.body.name;
   let newAvatarURL = req.body.avatarURL;
   if (newName) {
-    if (newName.length === 0) {
+    if (newName.length == 0) {
       newName = userId;
     }
     await users.updateOne({id:userId}, {$set: {name: newName}});
