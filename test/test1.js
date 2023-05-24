@@ -17,6 +17,15 @@
 // }
 
 let li1 = [1, 2, 5,3, 4];
-if (5 in li1) {
-    console.log("yes");
-}
+
+li1.sort((lhs, rhs)=>{
+    if (lhs < rhs) {
+        return -1
+    }
+    if (lhs > rhs) {
+        return 1;
+    }
+    return 0;
+});
+
+console.log(li1);
